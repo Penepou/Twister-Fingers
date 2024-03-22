@@ -53,8 +53,6 @@ public class RouletteElement extends SurfaceView implements SurfaceHolder.Callba
             textPaint.setColor(Color.BLACK);
             canvas.drawText(String.valueOf(finger), x + 30, y + 30, textPaint);
 
-            Paint textPaint2 = new Paint();
-            textPaint.setColor(Color.BLACK);
             canvas.drawText(String.valueOf(hand), x + 30, y + 30 + 60, textPaint);
         }
     }
