@@ -4,16 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.media.metrics.Event;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
 import android.view.View;
 
 import com.ut3.twister_fingers.FinActivity;
-import com.ut3.twister_fingers.GameActivity;
 import com.ut3.twister_fingers.Roulette.SpotColor;
 
 import java.util.ArrayList;
@@ -24,6 +19,8 @@ public class Tapis extends View {
     ArrayList<Circle> circles = new ArrayList<>();
     Context context;
 
+    private int circleRadius = 100;
+
     public Tapis(Context context) {
         super(context);
         this.context = context;
@@ -32,12 +29,15 @@ public class Tapis extends View {
         SpotColor[] spotColorValues = SpotColor.values();
         List<SpotColor> spotColorArrayList = Arrays.asList(spotColorValues);
 
+
+
+
         for (int i = 1; i <= 4; i++) {
-            for (int j = 1; j <= 6; j++) {
+            for (int j = 1; j <= 5; j++) {
                 circles.add(new Circle(context,
-                        ((width / 4) * i) - 100,
-                        ((height / 6) * j) - 100,
-                        100, spotColorArrayList.get(i - 1).getColor())
+                        ((width / 4) * i) - circleRadius,
+                        ((height / 6) * j) - circleRadius + 200,
+                        circleRadius, spotColorArrayList.get(i - 1).getColor())
                 );
             }
         }
