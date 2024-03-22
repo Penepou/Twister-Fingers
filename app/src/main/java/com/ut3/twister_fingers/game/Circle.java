@@ -59,5 +59,9 @@ public class Circle extends View {
 
     }
 
+
+    public int getColor(){
+        return paint.getColor();
+    }
 }
 

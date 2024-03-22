@@ -70,5 +70,7 @@ public class RouletteElement extends SurfaceView implements SurfaceHolder.Callba
         invalidate();
     }
 
-
+    public int getColor(){
+        return color.getColor();
+    }
 }

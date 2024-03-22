@@ -58,7 +58,6 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback, Mic
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         canvas.drawColor(Color.WHITE);
         // Draw each RouletteElement on the canvas
         for (int i = 0;  i < elements.size(); i++) {
