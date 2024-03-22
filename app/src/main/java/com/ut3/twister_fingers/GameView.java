@@ -44,6 +44,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         // instancier les objets du jeu
         roulette = new Roulette(context);
         tapis = new Tapis(context,nbDoigts, roulette);
+        roulette.addObs(tapis);
     }
 
     @Override

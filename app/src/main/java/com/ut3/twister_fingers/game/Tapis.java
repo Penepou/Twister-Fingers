@@ -13,13 +13,14 @@ import com.ut3.twister_fingers.FinActivity;
 import com.ut3.twister_fingers.Roulette.Roulette;
 import com.ut3.twister_fingers.Roulette.RouletteElement;
 import com.ut3.twister_fingers.Roulette.SpotColor;
+import com.ut3.twister_fingers.util.RouletteObservateur;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Tapis extends View {
+public class Tapis extends View implements RouletteObservateur {
     ArrayList<Circle> circles = new ArrayList<>();
     Context context;
     ArrayList<Integer> listCorrectTouch;
@@ -123,6 +124,7 @@ public class Tapis extends View {
                 }
                 else{
                     lancerRoulette();
+                    Log.d("MICRO", resultatCourant.toString());
                     break;
                 }
                 break;
@@ -147,6 +149,7 @@ public class Tapis extends View {
     }
 
     public void lancerRoulette(){
+
     }
 
     public void loseLife(){
@@ -156,5 +159,11 @@ public class Tapis extends View {
             Intent intentFin = new Intent(context, FinActivity.class);
             context.startActivity(intentFin);
         }
+    }
+
+    @Override
+    public void notify(RouletteElement element) {
+        resultatCourant = element;
+        Log.d("MICRO", resultatCourant.toString());
     }
 }

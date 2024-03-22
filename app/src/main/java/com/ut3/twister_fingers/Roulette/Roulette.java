@@ -9,6 +9,9 @@ import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
+import com.ut3.twister_fingers.game.Tapis;
+import com.ut3.twister_fingers.util.RouletteObservateur;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +24,8 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback, Mic
     boolean isResultReady = false;
     Microphone microphone;
     Timer timer = new Timer();
+    List<RouletteObservateur> observateurs = new ArrayList<>();
+
 
     public Roulette(Context context) {
         super(context);
@@ -88,23 +93,23 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback, Mic
         }
     }
 
-    public synchronized RouletteElement getRouletteResult(){
-        while (!isResultReady){
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-        return elements.get(0);
-    }
 
     @Override
     public void onBlowDetected() {
         timer.cancel();
         isResultReady = true;
         microphone.stopRecording();
+        notifyAllObs();
+    }
+
+    private void notifyAllObs() {
+        for (RouletteObservateur observateur : observateurs) {
+            observateur.notify(elements.get(0));
+        }
     }
 
 
+    public void addObs(RouletteObservateur observateur) {
+        observateurs.add(observateur);
+    }
 }
