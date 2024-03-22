@@ -41,7 +41,7 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback {
                 if (time>i*5){
                     timer.cancel();
                     isResultReady = true;
-                    notifyAll();
+                    //notifyAll();
                 }
             }
         }, 0, 200);
