@@ -27,6 +27,9 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback {
 
         instanciateElements();
 
+        Microphone microphone = new Microphone(context);
+        microphone.startRecording();
+
         startRoulette(3);
     }
 
@@ -41,7 +44,7 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback {
                 if (time>i*5){
                     timer.cancel();
                     isResultReady = true;
-                    notifyAll();
+                    //notifyAll();
                 }
             }
         }, 0, 200);
