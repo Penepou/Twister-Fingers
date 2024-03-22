@@ -73,6 +73,17 @@ public class Tapis extends View {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:
                 // Un toucher a été relâché
+                for (int i = 0; i < pointerCount; i++) {
+                    float x = event.getX(i);
+                    float y = event.getY(i);
+                    for (Circle circle : circles) {
+                        if (circle.contains(x, y)) {
+                            circle.onTouchUp();
+                            break;
+                        }
+                    }
+                }
+
                 Log.d("Tapis", "Un toucher a été relâché, nombre de touchers simultanés : " + pointerCount);
                 break;
         }
@@ -83,6 +94,7 @@ public class Tapis extends View {
 
         for (Circle circle : circles) {
             if (circle.contains(x, y)) {
+                circle.onTouchDown();
                 int index = circles.indexOf(circle);
                 listCorrectTouch.set(index,1);
                 Log.d("Tapis", "Cercle touché : " + listCorrectTouch.toString());

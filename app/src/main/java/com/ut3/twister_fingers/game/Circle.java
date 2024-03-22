@@ -2,6 +2,7 @@ package com.ut3.twister_fingers.game;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 
@@ -9,6 +10,8 @@ public class Circle extends View {
     private int x, y;
     private int radius;
     private Paint paint;
+
+    private int baseColor;
 
     @Override
     public float getX() {
@@ -30,6 +33,7 @@ public class Circle extends View {
 
     public Circle(Context context, int x, int y, int radius, int color) {
         super(context);
+        this.baseColor = color;
         paint = new Paint();
         paint.setColor(color);
         paint.setStyle(Paint.Style.FILL);
@@ -45,5 +49,15 @@ public class Circle extends View {
 
     public void update() {
     }
+
+    public void onTouchDown() {
+        paint.setColor(baseColor + 100);
+    }
+
+    public void onTouchUp() {
+        paint.setColor(baseColor);
+
+    }
+
 }
 
