@@ -90,7 +90,7 @@ public class Microphone {
         }
         amplitude /= bufferSize;
 
-        double threshold = 3000.0;
+        double threshold = 6000.0;
 
         if (amplitude > threshold) {
             Log.d("DEBUG MICRO", "AAAAAAAAAAAAAAAAHHHHHH");
