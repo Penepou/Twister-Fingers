@@ -19,7 +19,7 @@ import java.util.TimerTask;
 public class Roulette extends SurfaceView implements SurfaceHolder.Callback {
     List<RouletteElement> elements = new ArrayList<>();
     float elementWidth = 100;
-
+    boolean isResultReady = false;
 
     public Roulette(Context context) {
         super(context);
@@ -40,6 +40,8 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback {
                 time++;
                 if (time>i*5){
                     timer.cancel();
+                    isResultReady = true;
+                    notifyAll();
                 }
             }
         }, 0, 200);
@@ -90,7 +92,14 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
-    public RouletteElement getRouletteResult(){
+    public synchronized RouletteElement getRouletteResult(){
+        while (!isResultReady){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
         return elements.get(0);
     }
 }
