@@ -1,5 +1,5 @@
 package com.ut3.twister_fingers.Roulette;
 
 public enum Hand {
-    DROIT, GAUCHE
+    DROITE, GAUCHE
 }
