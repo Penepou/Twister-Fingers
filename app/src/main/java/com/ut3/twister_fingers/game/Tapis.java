@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.metrics.Event;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -36,15 +37,12 @@ public class Tapis extends View {
                 );
             }
         }
-        setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                for (Circle circle : circles) {
-                    circle.onTouchEvent(event);
-                }
-                return true;
-            }
-        });
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        return true;
     }
 
     public void draw(Canvas canvas) {

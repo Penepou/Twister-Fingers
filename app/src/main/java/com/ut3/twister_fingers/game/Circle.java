@@ -24,6 +24,9 @@ public class Circle extends View {
         this.radius = radius;
     }
 
+    public void setRadius(int radius){
+        this.radius = radius;
+    }
     @Override
     public void onDraw(Canvas canvas) {
         canvas.drawCircle(x, y, radius, paint);
@@ -31,11 +34,5 @@ public class Circle extends View {
 
     public void update() {
     }
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-
-       return true;
-    }
-
 }
 

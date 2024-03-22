@@ -3,10 +3,13 @@ package com.ut3.twister_fingers;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 
@@ -36,6 +39,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+
+        setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                performClick();
+
+
+
+                return true;
+            }
+        });
         thread.setRunning(true);
         thread.start();
     }
@@ -64,11 +79,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
 
         if (canvas != null) {
-            /*
-            canvas.drawColor(Color.RED);
-            Paint paint = new Paint();
-            paint.setColor(Color.rgb(250, 0, 0));
-            canvas.drawRect(100, 100, 100, 200, paint);*/
         }
         // appeler la methode draw des objets du jeu
         tapis.draw(canvas);
