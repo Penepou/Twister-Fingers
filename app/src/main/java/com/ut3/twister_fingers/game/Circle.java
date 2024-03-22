@@ -51,7 +51,7 @@ public class Circle extends View {
     }
 
     public void onTouchDown() {
-        paint.setColor(baseColor + 100);
+        paint.setColor(baseColor);
     }
 
     public void onTouchUp() {

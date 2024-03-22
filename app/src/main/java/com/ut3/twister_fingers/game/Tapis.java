@@ -36,6 +36,7 @@ public class Tapis extends View implements RouletteObservateur {
     public Tapis(Context context, int nbdoigt, Roulette roulette) {
         super(context);
         this.context = context;
+        this.roulette = roulette;
         int width = Resources.getSystem().getDisplayMetrics().widthPixels;
         int height = Resources.getSystem().getDisplayMetrics().heightPixels;
         SpotColor[] spotColorValues = SpotColor.values();
@@ -54,7 +55,7 @@ public class Tapis extends View implements RouletteObservateur {
         }
         //initialisation de la liste des cercle appuyé, initialisé à 0
         listCorrectTouch = new ArrayList<Integer>(Collections.nCopies(circles.size(), 0));
-        lancerRoulette();
+        //lancerRoulette();
     }
 
     @Override
@@ -124,7 +125,6 @@ public class Tapis extends View implements RouletteObservateur {
                 }
                 else{
                     lancerRoulette();
-                    Log.d("MICRO", resultatCourant.toString());
                     break;
                 }
                 break;
@@ -134,7 +134,8 @@ public class Tapis extends View implements RouletteObservateur {
     }
 
     public boolean isCorrect(Circle circle){
-        return circle.getColor()==resultatCourant.getColor();
+        Log.d("MICRO", "test " + circle.getColor() + "aaaaaa" + resultatCourant.getColor());
+        return (circle.getColor())==resultatCourant.getColor();
     }
 
     public void draw(Canvas canvas) {
@@ -142,14 +143,13 @@ public class Tapis extends View implements RouletteObservateur {
         for (Circle circle : circles) {
             circle.draw(canvas);
         }
-        roulette.draw(canvas);
     }
 
     public void update() {
     }
 
     public void lancerRoulette(){
-
+        roulette.startRoulette();
     }
 
     public void loseLife(){
