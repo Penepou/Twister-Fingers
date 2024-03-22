@@ -5,13 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
-import com.ut3.twister_fingers.game.Tapis;
 import com.ut3.twister_fingers.util.RouletteObservateur;
 
 import java.util.ArrayList;
@@ -26,12 +24,14 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback, Mic
     boolean isResultReady = false;
     Microphone microphone;
     Timer timer = new Timer();
+    int nbDoigts;
     List<RouletteObservateur> observateurs = new ArrayList<>();
 
 
-    public Roulette(Context context) {
+    public Roulette(Context context, int nbDoigts) {
         super(context);
         getHolder().addCallback(this);
+        this.nbDoigts = nbDoigts;
 
         instanciateElements();
 
@@ -53,10 +53,12 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback, Mic
     }
 
     private void instanciateElements() {
+        Fingers[] fingersarray = Fingers.values();
+
         for (SpotColor color : SpotColor.values()){
-            for (Fingers fingers : Fingers.values()){
+            for (int i = 0; i< nbDoigts; i++){
                 for (Hand hand : Hand.values()){
-                    elements.add(new RouletteElement(this.getContext(), color, hand, fingers, 0, 0));
+                    elements.add(new RouletteElement(this.getContext(), color, hand, fingersarray[i], 0, 0));
                 }
             }
         }
