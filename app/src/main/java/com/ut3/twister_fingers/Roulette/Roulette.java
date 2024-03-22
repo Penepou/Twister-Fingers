@@ -42,6 +42,10 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback, Mic
     }
 
     public void startRoulette() {
+        if (timer!=null){
+            timer.cancel();
+        }
+
         microphone.startRecording();
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
