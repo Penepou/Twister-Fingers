@@ -27,15 +27,22 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback {
 
         instanciateElements();
 
+        startRoulette(3);
+    }
 
-        new Timer().scheduleAtFixedRate(new TimerTask() {
+    private void startRoulette(int i) {
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            int time = 0;
             @Override
             public void run() {
                 update();
+                time++;
+                if (time>i*5){
+                    timer.cancel();
+                }
             }
         }, 0, 200);
-
-
     }
 
     private void instanciateElements() {
@@ -81,5 +88,9 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback {
         for (RouletteElement elements : elements){
             elements.update();
         }
+    }
+
+    public RouletteElement getRouletteResult(){
+        return elements.get(0);
     }
 }

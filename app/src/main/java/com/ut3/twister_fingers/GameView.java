@@ -13,6 +13,12 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
+import com.ut3.twister_fingers.Roulette.Fingers;
+import com.ut3.twister_fingers.Roulette.Hand;
+import com.ut3.twister_fingers.Roulette.Roulette;
+import com.ut3.twister_fingers.Roulette.RouletteElement;
+import com.ut3.twister_fingers.Roulette.SpotColor;
+
 import com.ut3.twister_fingers.game.Circle;
 import com.ut3.twister_fingers.game.Tapis;
 
@@ -21,6 +27,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private int nbDoigts;
     // declarer les objets du jeu (possiblement des listes)
+    RouletteElement test;
+    Roulette roulette;
     private Tapis tapis;
 
     public GameView(Context context, int nbDoigts) {
@@ -34,6 +42,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
 
         // instancier les objets du jeu
+        roulette = new Roulette(context);
         tapis = new Tapis(context);
     }
 
@@ -79,6 +88,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         if (canvas != null) {
         }
         // appeler la methode draw des objets du jeu
+        roulette.draw(canvas);
         tapis.draw(canvas);
     }
 
