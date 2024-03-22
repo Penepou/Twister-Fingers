@@ -39,7 +39,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         // instancier les objets du jeu
         roulette = new Roulette(context, nbDoigts);
-        tapis = new Tapis(context,nbDoigts, roulette);
+        roulette = new Roulette(context);
+        tapis = new Tapis(context,nbDoigts, roulette, this);
         roulette.addObs(tapis);
         rouletteToolTipText = new RouletteToolTipText(context);
         roulette.addObs(rouletteToolTipText);
@@ -70,13 +71,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry = true;
-        while (retry) {
-            try {
-                thread.setRunning(false);
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            thread.setRunning(false);
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         retry = false;
     }
@@ -94,5 +93,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
+    }
+
+    public void stopGame() {
+        thread.setRunning(false);
     }
 }

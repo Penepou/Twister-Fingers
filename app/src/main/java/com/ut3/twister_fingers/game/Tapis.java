@@ -11,6 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.ut3.twister_fingers.FinActivity;
+import com.ut3.twister_fingers.GameThread;
+import com.ut3.twister_fingers.GameView;
 import com.ut3.twister_fingers.Roulette.Roulette;
 import com.ut3.twister_fingers.Roulette.RouletteElement;
 import com.ut3.twister_fingers.Roulette.SpotColor;
@@ -29,6 +31,8 @@ public class Tapis extends View implements RouletteObservateur {
     Roulette roulette;
     Vibrator vibrator;
 
+    GameView gameView;
+
     private final Paint lifePaint = new Paint();
     int nbLifes = 3;
 
@@ -38,10 +42,11 @@ public class Tapis extends View implements RouletteObservateur {
     private int score = 0;
     private int circleRadius = 100;
 
-    public Tapis(Context context, int nbdoigt, Roulette roulette) {
+    public Tapis(Context context, int nbdoigt, Roulette roulette, GameView gameView) {
         super(context);
         this.context = context;
         this.roulette = roulette;
+        this.gameView = gameView;
         int width = Resources.getSystem().getDisplayMetrics().widthPixels;
         int height = Resources.getSystem().getDisplayMetrics().heightPixels;
         SpotColor[] spotColorValues = SpotColor.values();
@@ -166,6 +171,7 @@ public class Tapis extends View implements RouletteObservateur {
         vibrator.vibrate(200);
         nbLifes = nbLifes - 1;
         if( nbLifes == 0){
+            gameView.stopGame();
             Intent intentFin = new Intent(context, FinActivity.class);
             intentFin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intentFin.putExtra("score", score);
