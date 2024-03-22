@@ -3,6 +3,8 @@ package com.ut3.twister_fingers.Roulette;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -70,6 +72,21 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback, Mic
             elements.get(i).setPosition(elementWidth*i,0);
             elements.get(i).draw(canvas);
         }
+
+
+        Path path = new Path();
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(3);
+        paint.setColor(Color.RED);
+        path.moveTo(0, -20);
+        path.lineTo(10, 0);
+        path.lineTo(-10, 0);
+        path.close();
+        path.offset(50, 125);
+        canvas.drawPath(path, paint);
+
+
     }
 
     @Override
