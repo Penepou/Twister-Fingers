@@ -34,6 +34,8 @@ public class Tapis extends View implements RouletteObservateur {
 
     boolean aPoseUnMauvaisDoigt = false;
     RouletteElement resultatCourant = null;
+
+    private int score = 0;
     private int circleRadius = 100;
 
     public Tapis(Context context, int nbdoigt, Roulette roulette) {
@@ -129,6 +131,7 @@ public class Tapis extends View implements RouletteObservateur {
                     loseLife();
                 }
                 else{
+                    score++;
                     lancerRoulette();
                     break;
                 }
@@ -164,6 +167,8 @@ public class Tapis extends View implements RouletteObservateur {
         nbLifes = nbLifes - 1;
         if( nbLifes == 0){
             Intent intentFin = new Intent(context, FinActivity.class);
+            intentFin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intentFin.putExtra("score", score);
             context.startActivity(intentFin);
         }
     }
