@@ -4,43 +4,49 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.media.metrics.Event;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
 import android.view.View;
 
 import com.ut3.twister_fingers.FinActivity;
-import com.ut3.twister_fingers.GameActivity;
 import com.ut3.twister_fingers.Roulette.SpotColor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Tapis extends View {
     ArrayList<Circle> circles = new ArrayList<>();
     Context context;
+    ArrayList<Integer> listCorrectTouch;
+    int nbDoigt;
 
-    public Tapis(Context context) {
+    private int circleRadius = 100;
+
+    public Tapis(Context context, int nbdoigt) {
         super(context);
         this.context = context;
+        this.nbDoigt = nbdoigt;
         int width = Resources.getSystem().getDisplayMetrics().widthPixels;
         int height = Resources.getSystem().getDisplayMetrics().heightPixels;
         SpotColor[] spotColorValues = SpotColor.values();
         List<SpotColor> spotColorArrayList = Arrays.asList(spotColorValues);
 
+
+
+
         for (int i = 1; i <= 4; i++) {
-            for (int j = 1; j <= 6; j++) {
+            for (int j = 1; j <= 5; j++) {
                 circles.add(new Circle(context,
-                        ((width / 4) * i) - 100,
-                        ((height / 6) * j) - 100,
-                        100, spotColorArrayList.get(i - 1).getColor())
+                        ((width / 4) * i) - circleRadius,
+                        ((height / 6) * j) - circleRadius + 200,
+                        circleRadius, spotColorArrayList.get(i - 1).getColor())
                 );
             }
         }
+        //initialisation de la liste des cercle appuyé, initialisé à 0
+        listCorrectTouch = new ArrayList<Integer>(Collections.nCopies(circles.size(), 0));
     }
 
     @Override
@@ -49,24 +55,58 @@ public class Tapis extends View {
         int pointerCount = event.getPointerCount();
 
         switch (action) {
+
             case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_POINTER_DOWN:
-                if(pointerCount > 4){
+            case MotionEvent.ACTION_POINTER_DOWN:  // Nouveau toucher détecté
+
+                for (int i = 0; i < pointerCount; i++) {
+                    float x = event.getX(i);
+                    float y = event.getY(i);
+                    updateListWhenPressed(x,y);
+                }
+                /*if(updateList()){
                     Intent intentFin = new Intent(context, FinActivity.class);
                     context.startActivity(intentFin);
-                }
-                // Nouveau toucher détecté
-                Log.d("Tapis", "Nouveau toucher détecté, nombre de touchers simultanés : " + pointerCount);
+                }*/
                 break;
-            case MotionEvent.ACTION_MOVE:
-                // Mouvement du toucher
-                break;
+
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:
                 // Un toucher a été relâché
+                for (int i = 0; i < pointerCount; i++) {
+                    float x = event.getX(i);
+                    float y = event.getY(i);
+                    for (Circle circle : circles) {
+                        if (circle.contains(x, y)) {
+                            circle.onTouchUp();
+                            break;
+                        }
+                    }
+                }
+
                 Log.d("Tapis", "Un toucher a été relâché, nombre de touchers simultanés : " + pointerCount);
                 break;
-        }        return true;
+        }
+        return true;
+    }
+
+    public boolean updateListWhenPressed(float x, float y){
+
+        for (Circle circle : circles) {
+            if (circle.contains(x, y)) {
+                circle.onTouchDown();
+                int index = circles.indexOf(circle);
+                listCorrectTouch.set(index,1);
+                Log.d("Tapis", "Cercle touché : " + listCorrectTouch.toString());
+
+                break;
+            }
+        }
+        return false;
+    }
+
+    public boolean isCorrect(){
+        return true;
     }
 
     public void draw(Canvas canvas) {
