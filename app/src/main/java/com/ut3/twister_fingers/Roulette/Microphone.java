@@ -20,6 +20,18 @@ public class Microphone {
     private Thread recordingThread;
     private boolean isRecording = false;
 
+
+    public interface MicrophoneListener {
+        void onBlowDetected();
+    }
+
+    private MicrophoneListener listener;
+
+    public void setMicrophoneListener(MicrophoneListener listener) {
+        this.listener = listener;
+    }
+
+
     public Microphone(Context context) {
         this.context = context;
         requestRecordAudioPermission();
@@ -76,10 +88,11 @@ public class Microphone {
         }
         amplitude /= bufferSize;
 
-        double threshold = 1000.0;
+        double threshold = 8000.0;
 
         if (amplitude > threshold) {
             Log.d("DEBUG MICRO", "AAAAAAAAAAAAAAAAHHHHHH");
+            listener.onBlowDetected();
         }
     }
 

@@ -10,16 +10,17 @@ import android.view.SurfaceView;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Roulette extends SurfaceView implements SurfaceHolder.Callback {
+public class Roulette extends SurfaceView implements SurfaceHolder.Callback, Microphone.MicrophoneListener {
     List<RouletteElement> elements = new ArrayList<>();
     float elementWidth = 100;
     boolean isResultReady = false;
+    Microphone microphone;
+    Timer timer = new Timer();
 
     public Roulette(Context context) {
         super(context);
@@ -27,25 +28,18 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback {
 
         instanciateElements();
 
-        Microphone microphone = new Microphone(context);
-        microphone.startRecording();
+        microphone = new Microphone(context);
+        microphone.setMicrophoneListener(this);
 
-        startRoulette(3);
+        microphone.startRecording();
+        startRoulette();
     }
 
-    private void startRoulette(int i) {
-        Timer timer = new Timer();
+    private void startRoulette() {
         timer.scheduleAtFixedRate(new TimerTask() {
-            int time = 0;
             @Override
             public void run() {
                 update();
-                time++;
-                if (time>i*5){
-                    timer.cancel();
-                    isResultReady = true;
-                    //notifyAll();
-                }
             }
         }, 0, 200);
     }
@@ -105,4 +99,13 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback {
         }
         return elements.get(0);
     }
+
+    @Override
+    public void onBlowDetected() {
+        timer.cancel();
+        isResultReady = true;
+        microphone.stopRecording();
+    }
+
+
 }
