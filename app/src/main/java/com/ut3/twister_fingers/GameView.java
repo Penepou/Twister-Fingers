@@ -7,20 +7,15 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.ut3.twister_fingers.Roulette.Fingers;
-import com.ut3.twister_fingers.Roulette.Hand;
 import com.ut3.twister_fingers.Roulette.Roulette;
 import com.ut3.twister_fingers.Roulette.RouletteElement;
-import com.ut3.twister_fingers.Roulette.SpotColor;
 
-import com.ut3.twister_fingers.game.Circle;
 import com.ut3.twister_fingers.game.Tapis;
+import com.ut3.twister_fingers.info.RouletteToolTipText;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private GameThread thread;
@@ -29,6 +24,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     // declarer les objets du jeu (possiblement des listes)
     RouletteElement test;
     Roulette roulette;
+    private RouletteToolTipText rouletteToolTipText;
     private Tapis tapis;
 
     public GameView(Context context, int nbDoigts) {
@@ -45,6 +41,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         roulette = new Roulette(context);
         tapis = new Tapis(context,nbDoigts, roulette);
         roulette.addObs(tapis);
+        rouletteToolTipText = new RouletteToolTipText(context);
+        roulette.addObs(rouletteToolTipText);
+
     }
 
     @Override
@@ -91,6 +90,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         // appeler la methode draw des objets du jeu
         roulette.draw(canvas);
         tapis.draw(canvas);
+        rouletteToolTipText.draw(canvas);
     }
 
     public void update() {

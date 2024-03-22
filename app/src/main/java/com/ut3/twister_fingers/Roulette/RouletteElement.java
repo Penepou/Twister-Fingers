@@ -71,4 +71,8 @@ public class RouletteElement extends SurfaceView implements SurfaceHolder.Callba
     public int getColor(){
         return color.getColor();
     }
+
+    public String getInfo() {
+        return "Main " + hand.name() + " avec " + finger.name() + " sur " + color.name();
+    }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -27,6 +28,8 @@ public class Tapis extends View implements RouletteObservateur {
     int nbDoigt;
     Roulette roulette;
     Vibrator vibrator;
+
+    private final Paint lifePaint = new Paint();
     int nbLifes = 3;
 
     boolean aPoseUnMauvaisDoigt = false;
@@ -56,6 +59,8 @@ public class Tapis extends View implements RouletteObservateur {
         //initialisation de la liste des cercle appuyé, initialisé à 0
         listCorrectTouch = new ArrayList<Integer>(Collections.nCopies(circles.size(), 0));
         //lancerRoulette();
+
+        lifePaint.setTextSize(30);
     }
 
     @Override
@@ -143,6 +148,8 @@ public class Tapis extends View implements RouletteObservateur {
         for (Circle circle : circles) {
             circle.draw(canvas);
         }
+
+        canvas.drawText(String.valueOf(nbLifes) + "/3", Resources.getSystem().getDisplayMetrics().widthPixels - 50 , 180, lifePaint);
     }
 
     public void update() {
