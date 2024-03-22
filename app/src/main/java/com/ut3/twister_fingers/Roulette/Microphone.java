@@ -72,12 +72,14 @@ public class Microphone {
     public void stopRecording() {
         isRecording = false;
         if (recorder != null) {
-            recorder.stop();
-            recorder.release();
-            recorder = null;
-        }
-        if (recordingThread != null) {
-            recordingThread = null;
+            try {
+                recorder.stop();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+            if (recordingThread != null) {
+                recordingThread = null;
+            }
         }
     }
 
