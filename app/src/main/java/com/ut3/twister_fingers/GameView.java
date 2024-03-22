@@ -45,9 +45,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             public boolean onTouch(View v, MotionEvent event) {
 
                 performClick();
-
-
-
+                tapis.onTouchEvent(event);
                 return true;
             }
         });
