@@ -4,9 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
+import android.view.View;
 
-public class Circle extends SurfaceView {
+public class Circle extends View {
     private int x, y;
     private int radius;
     private Paint paint;
@@ -27,6 +30,11 @@ public class Circle extends SurfaceView {
     }
 
     public void update() {
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+       return true;
     }
 
 }
