@@ -27,7 +27,7 @@ public class Roulette extends SurfaceView implements SurfaceHolder.Callback {
 
         instanciateElements();
 
-        startRoulette(3);
+       startRoulette(3);
     }
 
     private void startRoulette(int i) {
