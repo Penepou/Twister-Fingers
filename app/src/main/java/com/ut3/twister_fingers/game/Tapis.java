@@ -30,12 +30,9 @@ public class Tapis extends View implements RouletteObservateur {
     int nbDoigt;
     Roulette roulette;
     Vibrator vibrator;
-
     GameView gameView;
-
     private final Paint lifePaint = new Paint();
     int nbLifes = 3;
-
     boolean aPoseUnMauvaisDoigt = false;
     RouletteElement resultatCourant = null;
 
@@ -134,15 +131,17 @@ public class Tapis extends View implements RouletteObservateur {
                 if(!isCorrect(circle)){
                     aPoseUnMauvaisDoigt = true;
                     loseLife();
+                    return false;
                 }
                 else{
                     score++;
                     lancerRoulette();
-                    break;
+                    return true;
                 }
-                break;
             }
         }
+        aPoseUnMauvaisDoigt = true;
+        loseLife();
         return false;
     }
 
@@ -158,6 +157,7 @@ public class Tapis extends View implements RouletteObservateur {
         }
 
         canvas.drawText(String.valueOf(nbLifes) + "/3", Resources.getSystem().getDisplayMetrics().widthPixels - 50 , 180, lifePaint);
+        canvas.drawText(String.valueOf(score), Resources.getSystem().getDisplayMetrics().widthPixels - 50 , 140, lifePaint);
     }
 
     public void update() {
