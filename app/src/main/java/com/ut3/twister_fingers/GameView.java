@@ -38,7 +38,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
 
         // instancier les objets du jeu
-        roulette = new Roulette(context);
+        roulette = new Roulette(context, nbDoigts);
         tapis = new Tapis(context,nbDoigts, roulette);
         roulette.addObs(tapis);
         rouletteToolTipText = new RouletteToolTipText(context);
