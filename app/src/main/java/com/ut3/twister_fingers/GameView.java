@@ -2,6 +2,7 @@ package com.ut3.twister_fingers;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.graphics.Color;
@@ -9,11 +10,15 @@ import android.graphics.Paint;
 
 import androidx.annotation.NonNull;
 
+import com.ut3.twister_fingers.game.Circle;
+import com.ut3.twister_fingers.game.Tapis;
+
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private GameThread thread;
 
     private int nbDoigts;
     // declarer les objets du jeu (possiblement des listes)
+    private Tapis tapis;
 
     public GameView(Context context, int nbDoigts) {
         super(context);
@@ -26,6 +31,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
 
         // instancier les objets du jeu
+        tapis = new Tapis(context);
     }
 
     @Override
@@ -64,6 +70,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             paint.setColor(Color.rgb(250, 0, 0));
             canvas.drawRect(100, 100, 100, 200, paint);*/
         }
+        // appeler la methode draw des objets du jeu
+        tapis.draw(canvas);
     }
 
     public void update() {
